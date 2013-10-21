@@ -18,11 +18,11 @@ int main(int argc, char **argv) {
   MPI_Comm_size(MPI_COMM_WORLD, &np);
 
   if (argc < 2) {
-	if (rank == 0) {
+	  if (rank == 0) {
       printf("\n   Podaj rozmiar wektora!\n\n");
     }
 
-	MPI_Finalize();
+	  MPI_Finalize();
     return 0;
   }
 
@@ -31,7 +31,7 @@ int main(int argc, char **argv) {
   if (vectorSize < np) {
     vectorSizeSafe = np;
   } else {
-    vectorSizeSafe = ceil((float)vectorSize / np) * np;
+    vectorSizeSafe = ceil((float) vectorSize / np) * np;
   }
 
   vectorX = vectorY = (int*) malloc(vectorSizeSafe * sizeof(int));
@@ -64,14 +64,12 @@ int main(int argc, char **argv) {
   }
 
   MPI_Reduce(&dotProductPartial, &dotProduct, np, MPI_INT,
-			 MPI_SUM, 0, MPI_COMM_WORLD);
-
-  if (rank == 0) {
+			       MPI_SUM, 0, MPI_COMM_WORLD);
 ///*
+  if (rank == 0) {
     printf("%i\n", dotProduct);
-//*/
   }
-
+//*/
   MPI_Finalize();
   return 0;
 }

@@ -29,7 +29,7 @@ int main(int argc, char **argv) {
   if (matrixSize < np) {
     matrixSizeSafe = np;
   } else {
-    matrixSizeSafe = ceil((float)matrixSize / np) * np;
+    matrixSizeSafe = ceil((float) matrixSize / np) * np;
   }
 
   vector = vectorFinal= (int*) malloc(matrixSizeSafe * sizeof(int));

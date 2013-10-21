@@ -24,42 +24,34 @@ int main(int argc, char **argv) {
     return 0;
   }
 
-  pointsSquare = atoi(argv[1]) * 2;
+  pointsSquare = atoi(argv[1]);
 
-  points = (float*) malloc(pointsSquare * np * sizeof(float));
-  pointsPartial = (float*) malloc(pointsSquare * sizeof(float));
+  points = (float*) malloc(pointsSquare * 2 * np * sizeof(float));
+  pointsPartial = (float*) malloc(pointsSquare * 2 * sizeof(float));
 
   if (rank == 0) {
     srand(time(NULL));
 
-    for (i = 0; i < pointsSquare * np; i++) {
+    for (i = 0; i < pointsSquare * 2 * np; i++) {
       points[i] = (float) rand() / (float) RAND_MAX;
     }
   }
 
-  MPI_Scatter(points,        pointsSquare, MPI_FLOAT,
-              pointsPartial, pointsSquare, MPI_FLOAT,
+  MPI_Scatter(points,        pointsSquare * 2, MPI_FLOAT,
+              pointsPartial, pointsSquare * 2, MPI_FLOAT,
               0, MPI_COMM_WORLD);
 
-  for (i = 0; i < pointsSquare; i += 2) {
+  for (i = 0; i < pointsSquare * 2; i += 2) {
     if (pointsPartial[i] * pointsPartial[i] + pointsPartial[i + 1] * pointsPartial[i + 1] <= 1) {
       pointsDiskPartial++;
     }
   }
 
-  printf("       %i - %i disk\n", rank, pointsDisk);
-  printf("       %i - %i diskPartial\n", rank, pointsDiskPartial);
-  printf("       %i - %i square\n", rank, pointsSquare * np);
-
-  MPI_Reduce(&pointsDiskPartial, &pointsDisk, np, MPI_INT,
+  MPI_Reduce(&pointsDiskPartial, &pointsDisk, 1, MPI_INT,
              MPI_SUM, 0, MPI_COMM_WORLD);
 
-  printf("SECOND %i - %i disk\n", rank, pointsDisk);
-  printf("SECOND %i - %i diskPartial\n", rank, pointsDiskPartial);
-  printf("SECOND %i - %i square\n", rank, pointsSquare * np);
-
   if (rank == 0) {
-    result = (double) 4 * pointsDisk / pointsSquare * np;
+    result = (double) 4 * pointsDisk / (pointsSquare * np);
 ///*
     printf("%.12lf\n", result);
 //*/

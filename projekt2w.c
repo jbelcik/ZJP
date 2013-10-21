@@ -63,7 +63,7 @@ int main(int argc, char **argv) {
     dotProductPartial += vectorXPartial[i] * vectorYPartial[i];
   }
 
-  MPI_Reduce(&dotProductPartial, &dotProduct, np, MPI_INT,
+  MPI_Reduce(&dotProductPartial, &dotProduct, 1, MPI_INT,
 			       MPI_SUM, 0, MPI_COMM_WORLD);
 ///*
   if (rank == 0) {

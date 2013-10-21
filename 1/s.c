@@ -45,5 +45,9 @@ int main(int argc, char **argv) {
 //*/
   }
 
+  free(vector);
+  free(vectorFinal);
+  free(matrix);
+
   return 0;
 }

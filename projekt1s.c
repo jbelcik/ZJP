@@ -13,8 +13,7 @@ int main(int argc, char **argv) {
 
   matrixSize = atoi(argv[1]);
 
-  vector = (int*) malloc(matrixSize * sizeof(int));
-  vectorFinal = (int*) malloc(matrixSize * sizeof(int));
+  vector = vectorFinal = (int*) malloc(matrixSize * sizeof(int));
   matrix = (int**) malloc(matrixSize * sizeof(int*));
 
   srand(time(NULL));

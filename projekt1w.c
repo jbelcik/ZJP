@@ -32,9 +32,8 @@ int main(int argc, char **argv) {
     matrixSizeSafe = ceil((float)matrixSize / np) * np;
   }
 
-  vector = (int*) malloc(matrixSizeSafe * sizeof(int));
+  vector = vectorFinal= (int*) malloc(matrixSizeSafe * sizeof(int));
   vectorPartial = (int*) malloc(matrixSizeSafe / np * sizeof(int));
-  vectorFinal = (int*) malloc(matrixSizeSafe * sizeof(int));
   matrix = (int*) malloc(matrixSizeSafe * matrixSizeSafe * sizeof(int));
   matrixPartial = (int*) malloc(matrixSizeSafe * matrixSizeSafe / np * sizeof(int));
 

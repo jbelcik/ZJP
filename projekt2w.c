@@ -5,7 +5,11 @@
 #include "mpi.h"
 
 int main(int argc, char **argv) {
-  int i, vectorSize, *vectorX, *vectorXPartial, *vectorY, *vectorYPartial, dotProduct = 0, dotProductPartial = 0;
+  int rank, np, i,
+	  vectorSize, vectorSizeSafe,
+	  *vectorX, *vectorXPartial,
+	  *vectorY, *vectorYPartial,
+	  dotProduct = 0, dotProductPartial = 0;
 
   MPI_Status status;
 
@@ -14,8 +18,11 @@ int main(int argc, char **argv) {
   MPI_Comm_size(MPI_COMM_WORLD, &np);
 
   if (argc < 2) {
-    printf("\n   Podaj rozmiar wektora!\n\n");
+	if (rank == 0) {
+      printf("\n   Podaj rozmiar wektora!\n\n");
+    }
 
+	MPI_Finalize();
     return 0;
   }
 
@@ -29,7 +36,6 @@ int main(int argc, char **argv) {
 
   vectorX = vectorY = (int*) malloc(vectorSizeSafe * sizeof(int));
   vectorXPartial = vectorYPartial = (int*) malloc(vectorSizeSafe / np * sizeof(int));
-  vectorY = (int*) malloc(vectorSizeSafe * sizeof(int));
 
   if (rank == 0) {
     srand(time(NULL));
@@ -57,11 +63,15 @@ int main(int argc, char **argv) {
     dotProductPartial += vectorXPartial[i] * vectorYPartial[i];
   }
 
+  MPI_Reduce(&dotProductPartial, &dotProduct, np, MPI_INT,
+			 MPI_SUM, 0, MPI_COMM_WORLD);
+
   if (rank == 0) {
 ///*
     printf("%i\n", dotProduct);
 //*/
   }
 
+  MPI_Finalize();
   return 0;
 }

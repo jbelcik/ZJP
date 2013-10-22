@@ -21,7 +21,7 @@ int main(int argc, char **argv) {
   vectorY = (int*) malloc(vectorSize * sizeof(int));
 
   srand(time(NULL));
-  clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &start);
+  clock_gettime(CLOCK_MONOTONIC, &start);
 
   for (i = 0; i < vectorSize; i++) {
     vectorX[i] = rand() % 10;
@@ -32,7 +32,7 @@ int main(int argc, char **argv) {
 
   if (!argv[2]) printf("%i\n", dotProduct);
 
-  clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &stop);
+  clock_gettime(CLOCK_MONOTONIC, &stop);
 
   t = (stop.tv_sec + stop.tv_nsec / MLD) - (start.tv_sec + start.tv_nsec / MLD);
 

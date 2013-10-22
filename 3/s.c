@@ -18,7 +18,7 @@ int main(int argc, char **argv) {
 
   pointsSquare = atoi(argv[1]);
 
-  clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &start);
+  clock_gettime(CLOCK_MONOTONIC, &start);
   srand(time(NULL));
 
   for (i = 0; i < pointsSquare; i++) {
@@ -32,7 +32,7 @@ int main(int argc, char **argv) {
 
   if (!argv[2]) printf("%.12f\n", (double) 4 * pointsDisk / pointsSquare);
 
-  clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &stop);
+  clock_gettime(CLOCK_MONOTONIC, &stop);
 
   t = (stop.tv_sec + stop.tv_nsec / MLD) - (start.tv_sec + start.tv_nsec / MLD);
 

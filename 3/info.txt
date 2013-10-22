@@ -16,7 +16,7 @@ sa na wszystkie procesy.
 
 
 
-Wyniki testow na sigmie:
+Wyniki jednokrotnychtestow na sigmie:
 
 
 Czas sekwencyjny dla 8000 punktow:                   0.000112

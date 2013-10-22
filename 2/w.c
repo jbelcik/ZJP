@@ -42,7 +42,7 @@ int main(int argc, char **argv) {
   vectorYPartial = (int*) malloc(vectorSizeSafe / np * sizeof(int));
 
   if (rank == 0) {
-    clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &start);
+    clock_gettime(CLOCK_MONOTONIC, &start);
     srand(time(NULL));
   
     for (i = 0; i < vectorSizeSafe; i++) {
@@ -74,7 +74,7 @@ int main(int argc, char **argv) {
   if (rank == 0) {
     if (!argv[2]) printf("%i\n", dotProduct);
 
-    clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &stop);
+    clock_gettime(CLOCK_MONOTONIC, &stop);
 
     t = (stop.tv_sec + stop.tv_nsec / MLD) - (start.tv_sec + start.tv_nsec / MLD);
 

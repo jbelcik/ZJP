@@ -16,7 +16,7 @@ na wszystkie procesy.
 
 
 
-Wyniki testow na sigmie:
+Wyniki jednokrotnych testow na sigmie:
 
 
 Czas sekwencyjny dla rozmiaru wektora 1000:                   0.000025

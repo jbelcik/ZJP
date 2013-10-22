@@ -21,7 +21,7 @@ int main(int argc, char **argv) {
   vectorFinal = (int*) malloc(matrixSize * sizeof(int));
   matrix = (int**) malloc(matrixSize * sizeof(int*));
 
-  clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &start);
+  clock_gettime(CLOCK_MONOTONIC, &start);
   srand(time(NULL));
 
   for (i = 0; i < matrixSize; i++) {
@@ -48,7 +48,7 @@ int main(int argc, char **argv) {
     if (!argv[2]) printf("   %i\n", vectorFinal[i]);
   }
 
-  clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &stop);
+  clock_gettime(CLOCK_MONOTONIC, &stop);
 
   t = (stop.tv_sec + stop.tv_nsec / MLD) - (start.tv_sec + start.tv_nsec / MLD);
 

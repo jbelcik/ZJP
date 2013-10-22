@@ -31,7 +31,7 @@ int main(int argc, char **argv) {
   pointsPartial = (float*) malloc(pointsSquare * 2 * sizeof(float));
 
   if (rank == 0) {
-    clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &start);
+    clock_gettime(CLOCK_MONOTONIC, &start);
     srand(time(NULL));
 
     for (i = 0; i < pointsSquare * 2 * np; i++) {
@@ -57,7 +57,7 @@ int main(int argc, char **argv) {
 
     if (!argv[2]) printf("%.12lf\n", result);
 
-    clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &stop);
+    clock_gettime(CLOCK_MONOTONIC, &stop);
 
     t = (stop.tv_sec + stop.tv_nsec / MLD) - (start.tv_sec + start.tv_nsec / MLD);
 

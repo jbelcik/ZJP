@@ -17,7 +17,7 @@ wszystkie procesy.
 
 
 
-Wyniki testow na sigmie:
+Wyniki jednokrotnych testow na sigmie:
 
 
 Czas sekwencyjny dla macierzy 16 x 16:                   0.000010

@@ -4,14 +4,16 @@
 #include <math.h>
 #include "mpi.h"
 
+#define MLD 1000000000.0
+
 int main(int argc, char **argv) {
   int rank, np, i,
-	  vectorSize, vectorSizeSafe,
-	  *vectorX, *vectorXPartial,
-	  *vectorY, *vectorYPartial,
-	  dotProduct = 0, dotProductPartial = 0;
-
-  MPI_Status status;
+  	  vectorSize, vectorSizeSafe,
+	    *vectorX, *vectorXPartial,
+	    *vectorY, *vectorYPartial,
+	    dotProduct = 0, dotProductPartial = 0;
+  struct timespec start, stop;
+  double t;
 
   MPI_Init(&argc, &argv);
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
@@ -34,10 +36,13 @@ int main(int argc, char **argv) {
     vectorSizeSafe = ceil((float) vectorSize / np) * np;
   }
 
-  vectorX = vectorY = (int*) malloc(vectorSizeSafe * sizeof(int));
-  vectorXPartial = vectorYPartial = (int*) malloc(vectorSizeSafe / np * sizeof(int));
+  vectorX = (int*) malloc(vectorSizeSafe * sizeof(int));
+  vectorY = (int*) malloc(vectorSizeSafe * sizeof(int));
+  vectorXPartial = (int*) malloc(vectorSizeSafe / np * sizeof(int));
+  vectorYPartial = (int*) malloc(vectorSizeSafe / np * sizeof(int));
 
   if (rank == 0) {
+    clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &start);
     srand(time(NULL));
   
     for (i = 0; i < vectorSizeSafe; i++) {
@@ -65,15 +70,16 @@ int main(int argc, char **argv) {
 
   MPI_Reduce(&dotProductPartial, &dotProduct, 1, MPI_INT,
 			       MPI_SUM, 0, MPI_COMM_WORLD);
-///*
+
   if (rank == 0) {
-    printf("%i\n", dotProduct);
+    if (!argv[2]) printf("%i\n", dotProduct);
+
+    clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &stop);
+
+    t = (stop.tv_sec + stop.tv_nsec / MLD) - (start.tv_sec + start.tv_nsec / MLD);
+
+    printf("                              Czas: %lf us\n", t);
   }
-//*/
-  free(vectorX);
-  free(vectorY);
-  free(vectorXPartial);
-  free(vectorYPartial);
 
   MPI_Finalize();
   return 0;

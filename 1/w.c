@@ -4,12 +4,14 @@
 #include <math.h>
 #include "mpi.h"
 
+#define MLD 1000000000.0
+
 int main(int argc, char **argv) {
   int rank, np, i, j, k,
       *vector, *vectorPartial, *vectorFinal,
       *matrix, *matrixPartial, matrixSize, matrixSizeSafe, matrixSizeSafeHelp;
-
-  MPI_Status status;
+  struct timespec start, stop;
+  double t;
 
   MPI_Init(&argc, &argv);
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
@@ -32,12 +34,14 @@ int main(int argc, char **argv) {
     matrixSizeSafe = ceil((float) matrixSize / np) * np;
   }
 
-  vector = vectorFinal = (int*) malloc(matrixSizeSafe * sizeof(int));
+  vector = (int*) malloc(matrixSizeSafe * sizeof(int));
+  vectorFinal = (int*) malloc(matrixSizeSafe * sizeof(int));
   vectorPartial = (int*) malloc(matrixSizeSafe / np * sizeof(int));
   matrix = (int*) malloc(matrixSizeSafe * matrixSizeSafe * sizeof(int));
   matrixPartial = (int*) malloc(matrixSizeSafe * matrixSizeSafe / np * sizeof(int));
 
   if (rank == 0) {
+    clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &start);
     srand(time(NULL));
 
     for (i = 0; i < matrixSizeSafe; i++) {
@@ -54,16 +58,17 @@ int main(int argc, char **argv) {
       } else {
         matrix[i] = 0;
       }
-    } 
-///*
-    for (i = 0, j = 0; i < matrixSizeSafe * matrixSizeSafe && j < matrixSizeSafe; i++) {
-      printf("%i ", matrix[i]);
+    }
 
-      if (i % matrixSizeSafe == matrixSizeSafe - 1) {
-        printf("   %i\n", vector[j++]);
+    if (!argv[2]) {
+      for (i = 0, j = 0; i < matrixSizeSafe * matrixSizeSafe && j < matrixSizeSafe; i++) {
+        printf("%i ", matrix[i]);
+
+        if (i % matrixSizeSafe == matrixSizeSafe - 1) {
+          printf("   %i\n", vector[j++]);
+        }
       }
     }
-//*/
   }
 
   MPI_Bcast(vector, matrixSizeSafe, MPI_INT, 0, MPI_COMM_WORLD);
@@ -83,18 +88,20 @@ int main(int argc, char **argv) {
   MPI_Gather(vectorPartial, matrixSizeSafe / np,  MPI_INT, 
              vectorFinal,   matrixSizeSafe / np,  MPI_INT, 
              0, MPI_COMM_WORLD);
-///*
+
   if (rank == 0) {
-    for (i = 0; i < matrixSizeSafe; i++) {
-      printf("%i\n", vectorFinal[i]);
+    if (!argv[2]) {
+      for (i = 0; i < matrixSizeSafe; i++) {
+        printf("%i\n", vectorFinal[i]);
+      }
     }
+
+    clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &stop);
+
+    t = (stop.tv_sec + stop.tv_nsec / MLD) - (start.tv_sec + start.tv_nsec / MLD);
+
+    printf("                              Czas: %lf us\n", t);
   }
-//*/
-  free(vector);
-  free(vectorFinal);
-  free(vectorPartial);
-  free(matrix);
-  free(matrixPartial);
 
   MPI_Finalize();
   return 0;

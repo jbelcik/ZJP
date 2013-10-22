@@ -2,9 +2,13 @@
 #include <stdlib.h>
 #include <time.h>
 
+#define MLD 1000000000.0
+
 int main(int argc, char **argv) {
   int i, pointsSquare, pointsDisk = 0;
   float x, y;
+  struct timespec start, stop;
+  double t;
 
   if (argc < 2) {
     printf("\n   Podaj ilość losowanych punktów!\n\n");
@@ -14,6 +18,7 @@ int main(int argc, char **argv) {
 
   pointsSquare = atoi(argv[1]);
 
+  clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &start);
   srand(time(NULL));
 
   for (i = 0; i < pointsSquare; i++) {
@@ -25,7 +30,13 @@ int main(int argc, char **argv) {
     }
   }
 
-  printf("%.12f\n", (double) 4 * pointsDisk / pointsSquare);
+  if (!argv[2]) printf("%.12f\n", (double) 4 * pointsDisk / pointsSquare);
+
+  clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &stop);
+
+  t = (stop.tv_sec + stop.tv_nsec / MLD) - (start.tv_sec + start.tv_nsec / MLD);
+
+  printf("                              Czas: %lf us\n", t);
 
   return 0;
 }

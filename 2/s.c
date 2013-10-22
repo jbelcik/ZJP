@@ -2,8 +2,12 @@
 #include <stdlib.h>
 #include <time.h>
 
+#define MLD 1000000000.0
+
 int main(int argc, char **argv) {
   int i, vectorSize, *vectorX, *vectorY, dotProduct = 0;
+  struct timespec start, stop;
+  double t;
 
   if (argc < 2) {
     printf("\n   Podaj rozmiar wektora!\n\n");
@@ -17,6 +21,7 @@ int main(int argc, char **argv) {
   vectorY = (int*) malloc(vectorSize * sizeof(int));
 
   srand(time(NULL));
+  clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &start);
 
   for (i = 0; i < vectorSize; i++) {
     vectorX[i] = rand() % 10;
@@ -25,7 +30,13 @@ int main(int argc, char **argv) {
     dotProduct += vectorX[i] * vectorY[i];
   }
 
-  printf("%i\n", dotProduct);
+  if (!argv[2]) printf("%i\n", dotProduct);
+
+  clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &stop);
+
+  t = (stop.tv_sec + stop.tv_nsec / MLD) - (start.tv_sec + start.tv_nsec / MLD);
+
+  printf("                              Czas: %lf us\n", t);
 
   return 0;
 }

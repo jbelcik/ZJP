@@ -78,7 +78,7 @@ int main(int argc, char **argv) {
 
     t = (stop.tv_sec + stop.tv_nsec / MLD) - (start.tv_sec + start.tv_nsec / MLD);
 
-    printf("                              Czas: %lf us\n", t);
+    printf("                              Czas: %lf\n", t);
   }
 
   MPI_Finalize();

@@ -22,3 +22,7 @@ test:
 	mpirun -np 2 ./w.o 100000 t
 	mpirun -np 4 ./w.o 100000 t
 	mpirun -np 8 ./w.o 100000 t
+	./s.o 100000000 t
+	mpirun -np 2 ./w.o 10000000 t
+	mpirun -np 4 ./w.o 10000000 t
+	mpirun -np 8 ./w.o 10000000 t

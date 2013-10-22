@@ -1,0 +1,35 @@
+Program obliczajacy przyblizona wartosc liczby PI metoda Monte Carlo. Projekt dzieli
+się na dwa rodzaje programow, sekwencyjny i rownolegly.
+
+
+Program sekwencyjny uruchamiamy komenda: "./s.o X Y", gdzie X to ilosc punktow,
+a opcjonalny Y to przelacznik testowy dla ktorego pomijane sa wydruki jakichkolwiek
+wynikow, oprocz czasu. Wartosc liczby PI  liczona jest metoda sekwencyjna.
+
+
+Program rownolegly uruchamiamy komenda: "mpirun -np P ./w.o X Y", gdzie P to liczba
+procesow na jakiej ma dzialac program, X to ilosc punktow, a opcjonalny Y to
+przelacznik testowy dla ktorego pomijane sa wydruki jakichkolwiek wynikow, oprocz
+czasu. Wartosc liczby PI  liczona jest metoda rownolegla, obliczenia rozproszone
+sa na wszystkie procesy.
+
+
+
+
+Wyniki testow na sigmie:
+
+
+Czas sekwencyjny dla 8000 punktow:                   0.000112
+Czas rownolegly  dla 8000 punktow przy 2 procesach:  0.000213
+Czas rownolegly  dla 8000 punktow przy 4 procesach:  0.000709
+Czas rownolegly  dla 8000 punktow przy 8 procesach:  0.001136
+
+Czas sekwencyjny dla 40 000 punktow:                   0.000536
+Czas rownolegly  dla 40 000 punktow przy 2 procesach:  0.000811
+Czas rownolegly  dla 40 000 punktow przy 4 procesach:  0.003388
+Czas rownolegly  dla 40 000 punktow przy 8 procesach:  0.008393
+
+Czas sekwencyjny dla 200 000 000 punktow:                   2.662064
+Czas rownolegly  dla 200 000 000 punktow przy 2 procesach:  1.993288
+Czas rownolegly  dla 200 000 000 punktow przy 4 procesach:  1.880069
+Czas rownolegly  dla 200 000 000 punktow przy 8 procesach:  1.840568

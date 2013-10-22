@@ -22,3 +22,7 @@ test:
 	mpirun -np 2 ./w.o 256 t
 	mpirun -np 4 ./w.o 256 t
 	mpirun -np 8 ./w.o 256 t
+	./s.o 1024 t
+	mpirun -np 2 ./w.o 1024 t
+	mpirun -np 4 ./w.o 1024 t
+	mpirun -np 8 ./w.o 1024 t

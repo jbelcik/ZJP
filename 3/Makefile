@@ -19,6 +19,6 @@ test:
 	mpirun -np 4 ./w.o 5000 t
 	mpirun -np 8 ./w.o 2500 t
 	./s.o 100000000 t
-	mpirun -np 2 ./w.o 25000000 t
-	mpirun -np 4 ./w.o 12500000 t
-	mpirun -np 8 ./w.o 6250000 t
+	mpirun -np 2 ./w.o 50000000 t
+	mpirun -np 4 ./w.o 25000000 t
+	mpirun -np 8 ./w.o 12500000 t

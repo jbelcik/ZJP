@@ -1,0 +1,41 @@
+Program obliczajacy wektor wynikowy poprzez mnozenie macierzy kwadratowej (n x n)
+przez wektor (1 x n). Projekt dzieli się na dwa rodzaje programow, sekwencyjny
+i rownolegly.
+
+
+Program sekwencyjny uruchamiamy komenda: "./s.o X Y", gdzie X to rozmiar macierzy,
+a opcjonalny Y to przelacznik testowy dla ktorego pomijane sa wydruki jakichkolwiek
+wynikow, oprocz czasu. Wektor liczony jest metoda sekwencyjna.
+
+
+Program rownolegly uruchamiamy komenda: "mpirun -np P ./w.o X Y", gdzie P to liczba
+procesow na jakiej ma dzialac program, X to rozmiar macierzy, a opcjonalny Y to
+przelacznik testowy dla ktorego pomijane sa wydruki jakichkolwiek wynikow, oprocz
+czasu. Wektor liczony jest metoda rownolegla, obliczenia rozproszone sa na
+wszystkie procesy.
+
+
+
+
+Wyniki testow na sigmie:
+
+
+Czas sekwencyjny dla macierzy 16 x 16:                   0.000010
+Czas rownolegly  dla macierzy 16 x 16 przy 2 procesach:  0.000093
+Czas rownolegly  dla macierzy 16 x 16 przy 4 procesach:  0.001469
+Czas rownolegly  dla macierzy 16 x 16 przy 8 procesach:  0.001123 
+
+Czas sekwencyjny dla macierzy 64 x 64:                   0.000089
+Czas rownolegly  dla macierzy 64 x 64 przy 2 procesach:  0.000234
+Czas rownolegly  dla macierzy 64 x 64 przy 4 procesach:  0.007365 
+Czas rownolegly  dla macierzy 64 x 64 przy 8 procesach:  0.001228
+
+Czas sekwencyjny dla macierzy 256 x 256:                   0.001417 
+Czas rownolegly  dla macierzy 256 x 256 przy 2 procesach:  0.001479 
+Czas rownolegly  dla macierzy 256 x 256 przy 4 procesach:  0.002195
+Czas rownolegly  dla macierzy 256 x 256 przy 8 procesach:  0.005262
+
+Czas sekwencyjny dla macierzy 1024 x 1024:                   0.022638
+Czas rownolegly  dla macierzy 1024 x 1024 przy 2 procesach:  0.021801
+Czas rownolegly  dla macierzy 1024 x 1024 przy 4 procesach:  0.022442
+Czas rownolegly  dla macierzy 1024 x 1024 przy 8 procesach:  0.025330
